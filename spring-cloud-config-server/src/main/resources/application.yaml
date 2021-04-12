@@ -1,0 +1,17 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: spring-cloud-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/parthasarathimishra10/spring-cloud-config-git-repo
+          search-paths:
+            - '*service'
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
