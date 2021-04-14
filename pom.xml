@@ -38,6 +38,8 @@
 		<module>spring-cloud-config-server</module>
 		<module>currency-exchange-service</module>
 		<module>currency-conversion-service</module>
+		<module>eureka-naming-server</module>
+		<module>api-gateway</module>
 	</modules>
 	<build>
 		<plugins>

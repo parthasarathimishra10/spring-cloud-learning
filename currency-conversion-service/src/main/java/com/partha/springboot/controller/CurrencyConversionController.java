@@ -43,7 +43,7 @@ public class CurrencyConversionController {
         CurrencyConversion currencyConversion = restTemplate.getForObject("http://localhost:8000/currency-exchange/from/{from}/to/{to}", CurrencyConversion.class, uriVariables);
         currencyConversion.setQuantity(quantity);
         currencyConversion.setTotalCalculatedAmount(quantity.multiply(currencyConversion.getConversionMultiple()));
-        currencyConversion.setEnvironment(environment.getProperty("local.server.port").concat(" :: Rest Template"));
+        currencyConversion.setEnvironment(environment.getProperty("local.server.port").concat(" :: Rest Template").concat("::CurrencyExchangePort::").concat(currencyConversion.getEnvironment()));
         return currencyConversion;
     }
 
@@ -53,7 +53,7 @@ public class CurrencyConversionController {
         CurrencyConversion currencyConversion = currencyExchangeProxy.getExchangeRate(from, to);
         currencyConversion.setQuantity(quantity);
         currencyConversion.setTotalCalculatedAmount(quantity.multiply(currencyConversion.getConversionMultiple()));
-        currencyConversion.setEnvironment(environment.getProperty("local.server.port").concat(" :: Feign"));
+        currencyConversion.setEnvironment(environment.getProperty("local.server.port").concat(" :: Feign").concat("::CurrencyExchangePort::").concat(currencyConversion.getEnvironment()));
         return currencyConversion;
     }
 }

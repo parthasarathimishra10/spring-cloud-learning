@@ -1,2 +1,12 @@
 server:
   port: 8100
+spring:
+  application:
+    name: currency-conversion
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+    enabled: true
+  instance:
+    prefer-ip-address: true
