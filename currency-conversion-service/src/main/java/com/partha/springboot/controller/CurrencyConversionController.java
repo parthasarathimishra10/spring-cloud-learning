@@ -2,6 +2,8 @@ package com.partha.springboot.controller;
 
 import com.partha.springboot.entities.CurrencyConversion;
 import com.partha.springboot.proxy.CurrencyExchangeProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -33,9 +35,13 @@ public class CurrencyConversionController {
         return new RestTemplate();
     }
 
+    private Logger logger = LoggerFactory.getLogger(CurrencyConversionController.class);
+
     @GetMapping("/rest-template/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion getConversionByRestTemplate(@PathVariable String from, @PathVariable String to,
                                                           @PathVariable BigDecimal quantity) {
+
+        logger.info("Currency Conversion :: Request Details:: {}, {}, {}", from, to, quantity);
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("from", from);
         uriVariables.put("to", to);
@@ -50,6 +56,7 @@ public class CurrencyConversionController {
     @GetMapping("/feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion getConversionByFeign(@PathVariable String from, @PathVariable String to,
                                                    @PathVariable BigDecimal quantity) {
+        logger.info("Currency Conversion :: Request Details:: {}, {}, {}", from, to, quantity);
         CurrencyConversion currencyConversion = currencyExchangeProxy.getExchangeRate(from, to);
         currencyConversion.setQuantity(quantity);
         currencyConversion.setTotalCalculatedAmount(quantity.multiply(currencyConversion.getConversionMultiple()));
